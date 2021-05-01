@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import WeekSideBar from '../WeekSideBar/index';
 
 export class Dashboard extends Component{
     render(){
         return(
             <div>
-                <h1>hello world</h1>
+                <WeekSideBar/>
             </div>
         );
     }

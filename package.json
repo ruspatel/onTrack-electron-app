@@ -84,7 +84,6 @@
     "email": "ra8patel@uwaterloo.ca",
     "url": "https://electron-react-boilerplate.js.org"
   },
-  
   "license": "MIT",
   "keywords": [
     "electron",
@@ -206,7 +205,8 @@
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.5",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.19",
+    "styled-components": "^5.2.3"
   },
   "devEngines": {
     "node": ">=10.x",
@@ -226,8 +226,6 @@
     ]
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "hooks": {}
   }
 }
