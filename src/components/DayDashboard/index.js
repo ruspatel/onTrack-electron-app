@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
 import { SelectorDot, SelectorDotsGroup, Button, SectionHeader } from './style';
+import {activeDayService, goalTrackerService} from '../../Dependencies/dependencyList';
 
 export class DayDashboard extends Component{
     constructor(props){
         super(props);
+        this.goalTrackerService = goalTrackerService;
+        this.activeDayService = activeDayService;
+        this.goalTrackerService.addObserver(this);
+        this.activeDayService.addObserver(this);
         this.state = {
             inputValue: '',
             selectedDot: null,
@@ -21,15 +26,19 @@ export class DayDashboard extends Component{
             selectedDot: e.target.id,
         });
     }
+
     createButtonClicked = () =>{
-        if(this.state.inputValue !== '' && !this.state.selectedDot){
-            console.log('submitted new point');
+        if(this.state.inputValue !== '' && this.state.selectedDot){
+            const activeDay = this.activeDayService.getActiveDay();
+            this.goalTrackerService.updateGoalData(activeDay, this.state.selectedDot, this.state.inputValue);
         }
         this.setState({
             inputValue: '',
             selectedDot: null
         })
     }
+
+    activeDayUpdated = () =>{}
 
     isButtonDisabled = () =>{
         return (this.state.inputValue === '' || !this.state.selectedDot);
@@ -63,9 +72,9 @@ export class DayDashboard extends Component{
                     </span>
                 </label>
                 <SelectorDotsGroup>
-                    <SelectorDot id="Kudos" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('Kudos')}/>
-                    <div>Kudos</div>
-                    <SelectorDot id="Tmr" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('Tmr')}/>
+                    <SelectorDot id="kudos" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('kudos')}/>
+                    <div>kudos</div>
+                    <SelectorDot id="goals" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('goals')}/>
                     <div>Tomorrow's Goals</div>
                 </SelectorDotsGroup>
                 <SectionHeader>Yesterday's Goals...</SectionHeader>

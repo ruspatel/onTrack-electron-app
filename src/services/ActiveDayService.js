@@ -1,5 +1,5 @@
 
-export default class ActiveDayClass{
+export default class ActiveDayService{
     constructor(){
         this.observers = [];
         const date = new Date();

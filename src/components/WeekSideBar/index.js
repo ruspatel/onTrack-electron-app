@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {NavColumn} from './style.js';
 import Day from '../Day/index';
-import ActiveDayService from '../../services/ActiveDayService';
+import {activeDayService} from '../../Dependencies/dependencyList';
 
 export default class WeekSideBar extends Component{
     constructor(props){
         super(props);
-        this.activeDayService = new ActiveDayService();
+        this.activeDayService = activeDayService;
         this.activeDayService.addObserver(this);
 
         this.state = {
