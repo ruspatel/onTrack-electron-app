@@ -25,3 +25,9 @@ export const Button = styled.button`
     border: 2px solid blue;
     margin: 5px;
 `;
+
+export const SectionHeader = styled.h1`
+    color: DodgerBlue;
+    font-family: Arial;
+
+`;

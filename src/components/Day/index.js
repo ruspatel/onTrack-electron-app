@@ -8,8 +8,8 @@ export default class Day extends Component{
 
     render(){
         return(            
-            <DayBlock>
-                <DayText>{this.props.dayName}</DayText>
+            <DayBlock style={this.props.active ? {'background-color': 'white'}: null}>
+                <DayText style={this.props.active ? {'color': 'DodgerBlue'}: null}>{this.props.dayName}</DayText>
             </DayBlock>
         );
     }

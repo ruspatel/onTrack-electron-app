@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { SelectorDot, SelectorDotsGroup, Button } from './style';
+import { SelectorDot, SelectorDotsGroup, Button, SectionHeader } from './style';
 
 export class DayDashboard extends Component{
     constructor(props){
@@ -54,7 +54,7 @@ export class DayDashboard extends Component{
     render(){
         return(
             <div>
-                <h1>Add Section</h1>
+                <SectionHeader>Add New Goals/Personal Props!</SectionHeader>
                 <label>
                     <span>
                         New Point:
@@ -68,9 +68,9 @@ export class DayDashboard extends Component{
                     <SelectorDot id="Tmr" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('Tmr')}/>
                     <div>Tomorrow's Goals</div>
                 </SelectorDotsGroup>
-                <h1>Yesterday's Goals...</h1>
-                <h1>Kudos to me for...</h1>
-                <h1>Tomorrow's Goals...</h1>
+                <SectionHeader>Yesterday's Goals...</SectionHeader>
+                <SectionHeader>Kudos to me for...</SectionHeader>
+                <SectionHeader>Tomorrow's Goals...</SectionHeader>
             </div>
         );
     }
