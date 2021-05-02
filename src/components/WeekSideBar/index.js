@@ -9,13 +9,15 @@ export default class WeekSideBar extends Component{
     getDays = () =>{
         return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     }
-
+    handleCLick = (e) =>{
+        console.log('day clicked', e);
+    }
     render(){
         return(
             <div>
                 <NavColumn>
                     {this.getDays().map((day) =>
-                    <Day dayName={day}/>)}
+                    <Day onClick={this.handleCLick} dayName={day}/>)}
                 </NavColumn>
             </div>
         );

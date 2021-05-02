@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { DayDashboard } from '../DayDashboard';
 import WeekSideBar from '../WeekSideBar/index';
 
 export class Dashboard extends Component{
@@ -6,6 +7,7 @@ export class Dashboard extends Component{
         return(
             <div>
                 <WeekSideBar/>
+                <DayDashboard/>
             </div>
         );
     }
