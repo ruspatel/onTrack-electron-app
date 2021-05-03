@@ -49,4 +49,13 @@ export default class GoalTrackerService{
     getGoalData(){
         return this.data;
     }
+
+    createNewWeek(){
+        for (let [key, value] of Object.entries(this.data)) {
+            for(let [keyDay, valueDay] of Object.entries(value)){
+                valueDay.length = 0;
+            }
+          }
+        this.notifyObservers();
+    }
 }

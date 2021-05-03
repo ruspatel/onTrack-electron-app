@@ -69,8 +69,6 @@ export class DayDashboard extends Component{
             activeDayKudos: activeDayKudos,
             tomorrowGoals: tomorrowGoals,
         });
-
-        console.log('activeDayKudos', activeDayKudos);
     }
 
     isButtonDisabled = () =>{
@@ -93,10 +91,17 @@ export class DayDashboard extends Component{
         }
     }
 
+    createNewWeek = () =>{
+        this.goalTrackerService.createNewWeek();
+    }
+
     render(){
         return(
             <div>
-                <SectionHeader>Add New Goals/Personal Props!</SectionHeader>
+                <SectionHeader>
+                    Add New Goals/Personal Props!                 
+                    <Button className="discard" onClick={this.createNewWeek}>New Week</Button>
+                </SectionHeader>
                 <label>
                     <span>
                         New Point:
