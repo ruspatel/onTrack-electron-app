@@ -38,10 +38,15 @@ export default class GoalTrackerService{
     }
 
     notifyObservers(){
-        this.notifyObservers.forEach((o) => o.goalDataUpdated());
+        this.observers.forEach((o) => o.goalDataUpdated());
     }
 
     updateGoalData(dayIndex, type, dataEntry){
         Object.entries(this.data)[dayIndex][1][type].push(dataEntry);
+        this.notifyObservers();
+    }
+
+    getGoalData(){
+        return this.data;
     }
 }

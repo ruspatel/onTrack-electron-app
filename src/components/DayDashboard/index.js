@@ -12,6 +12,10 @@ export class DayDashboard extends Component{
         this.state = {
             inputValue: '',
             selectedDot: null,
+            activeDay: 0,
+            todayGoals: null,
+            activeDayKudos: null,
+            tomorrowGoals: null,
         }
     }
 
@@ -30,7 +34,13 @@ export class DayDashboard extends Component{
     createButtonClicked = () =>{
         if(this.state.inputValue !== '' && this.state.selectedDot){
             const activeDay = this.activeDayService.getActiveDay();
-            this.goalTrackerService.updateGoalData(activeDay, this.state.selectedDot, this.state.inputValue);
+            if(this.state.selectedDot === 'kudos' || this.state.selectedDot === 'todayGoals'){
+                const type = this.state.selectedDot === 'todayGoals' ? 'goals': this.state.selectedDot;
+                this.goalTrackerService.updateGoalData(activeDay, type, this.state.inputValue);
+            }else{
+                const tomorrowDay = (activeDay + 1) % 7;
+                this.goalTrackerService.updateGoalData(tomorrowDay, 'goals', this.state.inputValue);
+            }
         }
         this.setState({
             inputValue: '',
@@ -38,7 +48,30 @@ export class DayDashboard extends Component{
         })
     }
 
-    activeDayUpdated = () =>{}
+    activeDayUpdated = () =>{
+        const activeDay = this.activeDayService.getActiveDay();
+        this.setState({
+            activeDay: activeDay,
+        });
+        this.goalDataUpdated();
+    }
+
+    goalDataUpdated = () =>{
+        const activeDay = this.activeDayService.getActiveDay();
+        const goals = this.goalTrackerService.getGoalData();
+        const tomorrow = (activeDay + 1) % 7;
+
+        const todayGoals = Object.entries(goals)[activeDay][1]["goals"];
+        const activeDayKudos = Object.entries(goals)[activeDay][1]["kudos"];
+        const tomorrowGoals = Object.entries(goals)[tomorrow][1]["goals"];
+        this.setState({
+            todayGoals: todayGoals,
+            activeDayKudos: activeDayKudos,
+            tomorrowGoals: tomorrowGoals,
+        });
+
+        console.log('activeDayKudos', activeDayKudos);
+    }
 
     isButtonDisabled = () =>{
         return (this.state.inputValue === '' || !this.state.selectedDot);
@@ -72,14 +105,20 @@ export class DayDashboard extends Component{
                     </span>
                 </label>
                 <SelectorDotsGroup>
+                    <SelectorDot id="todayGoals" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('todayGoals')}/>
+                    <div>Today's Goals</div>
                     <SelectorDot id="kudos" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('kudos')}/>
-                    <div>kudos</div>
-                    <SelectorDot id="goals" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('goals')}/>
+                    <div>Kudos</div>
+                    <SelectorDot id="tmrGoals" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('tmrGoals')}/>
                     <div>Tomorrow's Goals</div>
                 </SelectorDotsGroup>
-                <SectionHeader>Yesterday's Goals...</SectionHeader>
+                <SectionHeader>Today's Goals...</SectionHeader>
+                {this.state.todayGoals ? this.state.todayGoals.map((goal) => <h1>{goal}</h1>): null}
                 <SectionHeader>Kudos to me for...</SectionHeader>
+                {this.state.activeDayKudos ? this.state.activeDayKudos.map((kudos) => <h1>{kudos}</h1>): null}
                 <SectionHeader>Tomorrow's Goals...</SectionHeader>
+                {this.state.tomorrowGoals ? this.state.tomorrowGoals.map((goal) => <h1>{goal}</h1>): null}
+
             </div>
         );
     }

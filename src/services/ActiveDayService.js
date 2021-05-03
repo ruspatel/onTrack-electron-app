@@ -4,7 +4,7 @@ export default class ActiveDayService{
         this.observers = [];
         const date = new Date();
         this.currentDay = date.getDay();
-        this.activeDay = this.currentDay;
+        this.activeDay = 0;
     }
 
     addObserver(observer){
@@ -16,7 +16,6 @@ export default class ActiveDayService{
         this.notifyObservers();
     }
     
-
     notifyObservers(){
         this.observers.forEach((o) => o.activeDayUpdated());
     }
