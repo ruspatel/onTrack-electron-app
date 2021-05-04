@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
-import { SelectorDot, SelectorDotsGroup, Button, SectionHeader } from './style';
+import { SelectorDot, SelectorDotsGroup, Button, SectionHeader, Section, SectionContent, GoalEntry } from './style';
 import {activeDayService, goalTrackerService} from '../../Dependencies/dependencyList';
+
+const sectionNames = {
+    todayGoals: 'todayGoals',
+    activeDayKudos: 'kudos',
+    tomorrowGoals: 'tmrGoals'
+};
 
 export class DayDashboard extends Component{
     constructor(props){
@@ -34,12 +40,12 @@ export class DayDashboard extends Component{
     createButtonClicked = () =>{
         if(this.state.inputValue !== '' && this.state.selectedDot){
             const activeDay = this.activeDayService.getActiveDay();
-            if(this.state.selectedDot === 'kudos' || this.state.selectedDot === 'todayGoals'){
-                const type = this.state.selectedDot === 'todayGoals' ? 'goals': this.state.selectedDot;
-                this.goalTrackerService.updateGoalData(activeDay, type, this.state.inputValue);
+            if(this.state.selectedDot === sectionNames.activeDayKudos || this.state.selectedDot === sectionNames.todayGoals){
+                const type = this.state.selectedDot === sectionNames.todayGoals ? 'goals': this.state.selectedDot;
+                this.goalTrackerService.makeGoalEntry(activeDay, type, this.state.inputValue);
             }else{
                 const tomorrowDay = (activeDay + 1) % 7;
-                this.goalTrackerService.updateGoalData(tomorrowDay, 'goals', this.state.inputValue);
+                this.goalTrackerService.makeGoalEntry(tomorrowDay, 'goals', this.state.inputValue);
             }
         }
         this.setState({
@@ -61,9 +67,9 @@ export class DayDashboard extends Component{
         const goals = this.goalTrackerService.getGoalData();
         const tomorrow = (activeDay + 1) % 7;
 
-        const todayGoals = Object.entries(goals)[activeDay][1]["goals"];
-        const activeDayKudos = Object.entries(goals)[activeDay][1]["kudos"];
-        const tomorrowGoals = Object.entries(goals)[tomorrow][1]["goals"];
+        const todayGoals = Object.entries(goals)[activeDay][1]["goals"].slice(0);
+        const activeDayKudos = Object.entries(goals)[activeDay][1]["kudos"].slice(0);
+        const tomorrowGoals = Object.entries(goals)[tomorrow][1]["goals"].slice(0);
         this.setState({
             todayGoals: todayGoals,
             activeDayKudos: activeDayKudos,
@@ -95,6 +101,33 @@ export class DayDashboard extends Component{
         this.goalTrackerService.createNewWeek();
     }
 
+    removeEntry = (sectionId, entryIndex) =>{
+        let dayIndex = this.activeDayService.getActiveDay();;
+        let type = 'goals';
+        if(sectionId === sectionNames.todayGoals){
+            let todayGoalsArray = this.state.todayGoals;
+            todayGoalsArray.splice(entryIndex, 1);
+            this.setState({
+                todayGoals: todayGoalsArray,
+            });
+        }else if(sectionId === sectionNames.activeDayKudos){
+            type = 'kudos';
+            let activeDayKudosArray = this.state.activeDayKudos;
+            activeDayKudosArray.splice(entryIndex, 1);
+            this.setState({
+                activeDayKudos: activeDayKudosArray,
+            });
+        }else{
+            dayIndex = (this.activeDayService.getActiveDay() + 1) % 7;
+            let tomorrowGoalsArray = this.state.tomorrowGoals;
+            tomorrowGoalsArray.splice(entryIndex, 1);
+            this.setState({
+                tomorrowGoals: tomorrowGoalsArray,
+            });
+        }
+        this.goalTrackerService.goalEntryRemoved(dayIndex, type, entryIndex);
+    }
+
     render(){
         return(
             <div>
@@ -110,20 +143,32 @@ export class DayDashboard extends Component{
                     </span>
                 </label>
                 <SelectorDotsGroup>
-                    <SelectorDot id="todayGoals" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('todayGoals')}/>
+                    <SelectorDot id={sectionNames.todayGoals} onClick={this.selectorDotClicked} style={this.getSelectorDotStyle(sectionNames.todayGoals)}/>
                     <div>Today's Goals</div>
-                    <SelectorDot id="kudos" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('kudos')}/>
+                    <SelectorDot id={sectionNames.activeDayKudos} onClick={this.selectorDotClicked} style={this.getSelectorDotStyle(sectionNames.activeDayKudos)}/>
                     <div>Kudos</div>
-                    <SelectorDot id="tmrGoals" onClick={this.selectorDotClicked} style={this.getSelectorDotStyle('tmrGoals')}/>
+                    <SelectorDot id={sectionNames.tomorrowGoals} onClick={this.selectorDotClicked} style={this.getSelectorDotStyle(sectionNames.tomorrowGoals)}/>
                     <div>Tomorrow's Goals</div>
                 </SelectorDotsGroup>
-                <SectionHeader>Today's Goals...</SectionHeader>
-                {this.state.todayGoals ? this.state.todayGoals.map((goal) => <h1>{goal}</h1>): null}
-                <SectionHeader>Kudos to me for...</SectionHeader>
-                {this.state.activeDayKudos ? this.state.activeDayKudos.map((kudos) => <h1>{kudos}</h1>): null}
-                <SectionHeader>Tomorrow's Goals...</SectionHeader>
-                {this.state.tomorrowGoals ? this.state.tomorrowGoals.map((goal) => <h1>{goal}</h1>): null}
 
+                <Section>
+                    <SectionHeader>Today's Goals...</SectionHeader>
+                    <SectionContent>
+                        {this.state.todayGoals ? this.state.todayGoals.map((goal, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.todayGoals, index)}>{goal}</GoalEntry>): null}
+                    </SectionContent>
+                </Section>
+                <Section>
+                    <SectionHeader>Kudos to me for...</SectionHeader>
+                    <SectionContent>
+                        {this.state.activeDayKudos ? this.state.activeDayKudos.map((kudos, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.activeDayKudos, index)}>{kudos}</GoalEntry>): null}
+                    </SectionContent>
+                </Section>
+                <Section>
+                    <SectionHeader>Tomorrow's Goals...</SectionHeader>
+                    <SectionContent>
+                        {this.state.tomorrowGoals ? this.state.tomorrowGoals.map((goal, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.tomorrowGoals, index)}>{goal}</GoalEntry>): null}
+                    </SectionContent>
+                </Section>
             </div>
         );
     }

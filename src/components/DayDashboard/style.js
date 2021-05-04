@@ -38,7 +38,21 @@ export const Button = styled.button`
     }
 `;
 
-export const SectionHeader = styled.h1`
+export const SectionHeader = styled.div`
     color: DodgerBlue;
     font-family: Arial;
+    font-size: 2em;
+    font-weight: bolder;
+    margin: 10px;
+`;
+
+export const Section = styled.div`
+`;
+
+export const SectionContent = styled.div`
+`;
+
+export const GoalEntry = styled.div`
+    font-size: 2em;
+    font-weight: bolder;
 `;

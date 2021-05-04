@@ -41,8 +41,13 @@ export default class GoalTrackerService{
         this.observers.forEach((o) => o.goalDataUpdated());
     }
 
-    updateGoalData(dayIndex, type, dataEntry){
+    makeGoalEntry(dayIndex, type, dataEntry){
         Object.entries(this.data)[dayIndex][1][type].push(dataEntry);
+        this.notifyObservers();
+    }
+
+    goalEntryRemoved(dayIndex, type, entryIndex){        
+        Object.entries(this.data)[dayIndex][1][type].splice(entryIndex, 1);
         this.notifyObservers();
     }
 
