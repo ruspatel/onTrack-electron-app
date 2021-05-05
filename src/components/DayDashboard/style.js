@@ -64,5 +64,9 @@ export const StyledList = styled.ul`
 
 export const StyledListItem = styled.li`
     font-size: 20px;
+    &:hover{
+        color: green;
+        cursor: pointer;
+    }
 `;
 
