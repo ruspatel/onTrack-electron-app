@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { SelectorDot, SelectorDotsGroup, Button, SectionHeader, Section, SectionContent, GoalEntry } from './style';
+import { SelectorDot, SelectorDotsGroup, Button, SectionHeader, Section, SectionContent, GoalEntry, StyledList, StyledListItem } from './style';
 import {activeDayService, goalTrackerService} from '../../Dependencies/dependencyList';
 
 const sectionNames = {
@@ -129,6 +129,9 @@ export class DayDashboard extends Component{
     }
 
     render(){
+
+        const todayGoalsList1 = this.state.todayGoals ? this.state.todayGoals.slice(0,4): null;
+        const todayGoalsList2 = this.state.todayGoals && this.state.todayGoals.length > 4 ? this.state.todayGoals.slice(4, this.state.todayGoals.length): null;
         return(
             <div>
                 <SectionHeader>
@@ -154,9 +157,17 @@ export class DayDashboard extends Component{
                 <Section>
                     <SectionHeader>Today's Goals...</SectionHeader>
                     <SectionContent>
-                        {this.state.todayGoals ? this.state.todayGoals.map((goal, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.todayGoals, index)}>{goal}</GoalEntry>): null}
+                        <div style={{display: 'flex'}}>
+                            <StyledList>
+                                {todayGoalsList1 ? todayGoalsList1.map((goal, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.todayGoals, index)}><StyledListItem>{goal}</StyledListItem></GoalEntry>): null}
+                            </StyledList>
+                            <StyledList>
+                                {todayGoalsList2 ? todayGoalsList2.map((goal, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.todayGoals, index + 4)}><StyledListItem>{goal}</StyledListItem></GoalEntry>): null}
+                            </StyledList>
+                        </div>
                     </SectionContent>
                 </Section>
+                
                 <Section>
                     <SectionHeader>Kudos to me for...</SectionHeader>
                     <SectionContent>

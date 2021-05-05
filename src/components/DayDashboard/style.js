@@ -50,9 +50,19 @@ export const Section = styled.div`
 `;
 
 export const SectionContent = styled.div`
+    height: 125px;
 `;
 
 export const GoalEntry = styled.div`
     font-size: 2em;
     font-weight: bolder;
 `;
+
+export const StyledList = styled.ul`
+    width: 350px;
+`;
+
+export const StyledListItem = styled.li`
+    font-size: 20px;
+`;
+
