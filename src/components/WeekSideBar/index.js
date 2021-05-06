@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {NavColumn} from './style.js';
+import {NavColumn, DayBox} from './style.js';
 import Day from '../Day/index';
 import {activeDayService} from '../../Dependencies/dependencyList';
 
@@ -34,9 +34,9 @@ export default class WeekSideBar extends Component{
             <div>
                 <NavColumn>
                     {this.getDays().map((day, index) =>
-                    <div onClick={() =>this.handleCLick(index)}>
+                    <DayBox onClick={() =>this.handleCLick(index)}>
                         <Day active={this.state.activeDay === index} dayName={day}/>
-                    </div>)}
+                    </DayBox>)}
                 </NavColumn>
             </div>
         );

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const NavColumn = styled.div`
     display: flex;
     flex-direction: column;
@@ -9,4 +8,10 @@ export const NavColumn = styled.div`
     margin-right: 10px;
     margin-left: -10px;
     margin-top: -30px;
+`;
+
+export const DayBox = styled.div`
+    &:hover{
+        cursor: pointer;
+    }
 `;
