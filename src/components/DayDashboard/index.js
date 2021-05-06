@@ -18,11 +18,15 @@ export class DayDashboard extends Component{
         this.state = {
             inputValue: '',
             selectedDot: null,
-            activeDay: 0,
+            activeDay: this.activeDayService.getActiveDay(),
             todayGoals: null,
             activeDayKudos: null,
             tomorrowGoals: null,
         }
+    }
+
+    componentDidMount = () =>{
+        this.goalDataUpdated();
     }
 
     updateInputValue = (e) =>{

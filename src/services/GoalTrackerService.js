@@ -1,5 +1,8 @@
+import {storeService} from '../Dependencies/dependencyList';
+
 export default class GoalTrackerService{
     constructor(){
+        this.storeService = storeService;
         this.observers = [];
         this.data={
             "Sunday": {
@@ -31,6 +34,14 @@ export default class GoalTrackerService{
                 "kudos": []
             },
         }
+        this.initializeData();
+    }
+
+    initializeData(){
+        if(this.storeService.getStoreSize() === 0){
+            return;
+        }
+        this.data = this.storeService.getStoreData();
     }
 
     addObserver(observer){
@@ -43,11 +54,13 @@ export default class GoalTrackerService{
 
     makeGoalEntry(dayIndex, type, dataEntry){
         Object.entries(this.data)[dayIndex][1][type].push(dataEntry);
+        this.storeService.updateStoreData(this.data);
         this.notifyObservers();
     }
 
     goalEntryRemoved(dayIndex, type, entryIndex){        
         Object.entries(this.data)[dayIndex][1][type].splice(entryIndex, 1);
+        this.storeService.updateStoreData(this.data);
         this.notifyObservers();
     }
 
@@ -60,7 +73,8 @@ export default class GoalTrackerService{
             for(let [keyDay, valueDay] of Object.entries(value)){
                 valueDay.length = 0;
             }
-          }
+        }
+        this.storeService.clearStore();
         this.notifyObservers();
     }
 }

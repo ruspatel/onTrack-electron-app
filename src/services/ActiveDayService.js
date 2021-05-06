@@ -4,7 +4,7 @@ export default class ActiveDayService{
         this.observers = [];
         const date = new Date();
         this.currentDay = date.getDay();
-        this.activeDay = 0;
+        this.activeDay = this.currentDay;
     }
 
     addObserver(observer){

@@ -5,6 +5,8 @@ import {
   BrowserWindow,
   MenuItemConstructorOptions,
 } from 'electron';
+const Store = require('electron-store');
+Store.initRenderer();
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;

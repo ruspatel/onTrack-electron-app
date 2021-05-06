@@ -8,9 +8,8 @@ export default class WeekSideBar extends Component{
         super(props);
         this.activeDayService = activeDayService;
         this.activeDayService.addObserver(this);
-
         this.state = {
-            activeDay: 0,
+            activeDay: this.activeDayService.getActiveDay(),
         }
     }
 
