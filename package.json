@@ -1,6 +1,6 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
+  "name": "On-Track!",
+  "productName": "On Track!",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Fast Refresh for rapid application development",
   "scripts": {
     "build": "concurrently \"yarn build:main\" \"yarn build:renderer\"",
@@ -15,8 +15,8 @@
     "test": "jest"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "On Track!",
+    "appId": "org.erb.onTrack",
     "files": [
       "dist/",
       "node_modules/",
@@ -71,8 +71,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "ruspatel",
+      "repo": "onTrack-electron-app"
     }
   },
   "repository": {
