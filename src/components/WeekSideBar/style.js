@@ -7,7 +7,7 @@ export const NavColumn = styled.div`
     float: left;
     margin-right: 10px;
     margin-left: -10px;
-    margin-top: -30px;
+    margin-top: -8px;
 `;
 
 export const DayBox = styled.div`

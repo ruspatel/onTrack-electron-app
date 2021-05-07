@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 export const DayBlock = styled.div`
     border: 1px solid white;
-    padding: 10px;
-    height: 80px;
+    padding: 9px;
+    height: 81px;
     width: 175px;
+    // margin-top: 10px;
 `;
 
 export const DayText = styled.h1`
