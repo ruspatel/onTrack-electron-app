@@ -1,4 +1,3 @@
-
 export default class ActiveDayService{
     constructor(){
         this.observers = [];

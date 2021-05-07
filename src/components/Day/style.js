@@ -5,7 +5,6 @@ export const DayBlock = styled.div`
     padding: 9px;
     height: 81px;
     width: 175px;
-    // margin-top: 10px;
 `;
 
 export const DayText = styled.h1`
