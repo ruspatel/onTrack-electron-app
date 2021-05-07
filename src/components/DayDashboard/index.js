@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { SelectorDot, SelectorDotsGroup, Button, SectionHeader, Section, SectionContent, GoalEntry, StyledList, StyledListItem } from './style';
+import { SelectorDot, SelectorDotsGroup, Button, SectionHeader, Section, SectionContent, GoalEntry, StyledList, StyledListItem, HeaderLabel, HeaderSpan, StyledInput, SelectorText } from './style';
 import {activeDayService, goalTrackerService} from '../../Dependencies/dependencyList';
 
 const sectionNames = {
@@ -146,73 +146,67 @@ export class DayDashboard extends Component{
     }
 
     render(){
-        const todayGoalsList1 = this.getSectionLists(this.state.todayGoals, 0, 4);
-        const todayGoalsList2 = this.getSectionLists(this.state.todayGoals, 1, 4);
-        const activeDayKudosList1 = this.getSectionLists(this.state.activeDayKudos, 0, 4);
-        const activeDayKudosList2 = this.getSectionLists(this.state.activeDayKudos, 1, 4);
-        const tomorrowGoalsList1 = this.getSectionLists(this.state.tomorrowGoals, 0, 4);
-        const tomorrowGoalsList2 = this.getSectionLists(this.state.tomorrowGoals, 1, 4);
+        const todayGoalsList1 = this.getSectionLists(this.state.todayGoals, 0, 3);
+        const todayGoalsList2 = this.getSectionLists(this.state.todayGoals, 1, 3);
+        const activeDayKudosList1 = this.getSectionLists(this.state.activeDayKudos, 0, 3);
+        const activeDayKudosList2 = this.getSectionLists(this.state.activeDayKudos, 1, 3);
+        const tomorrowGoalsList1 = this.getSectionLists(this.state.tomorrowGoals, 0, 3);
+        const tomorrowGoalsList2 = this.getSectionLists(this.state.tomorrowGoals, 1, 3);
         return(
             <div>
                 <SectionHeader>
                     Add New Goals/Personal Props!                 
                     <Button className="discard" onClick={this.createNewWeek}>New Week</Button>
                 </SectionHeader>
-                <label>
-                    <span>
-                        New Point:
-                        <input value={this.state.inputValue} onChange={this.updateInputValue}/>                       
-                        <Button disabled={this.isButtonDisabled()} style={this.getSubmitButtonStyle()} onClick={this.createButtonClicked}>Create</Button>
-                    </span>
-                </label>
+
+                <HeaderSpan>
+                    New Point:
+                    <StyledInput value={this.state.inputValue} onChange={this.updateInputValue} maxLength="30"/>                       
+                    <Button disabled={this.isButtonDisabled()} style={this.getSubmitButtonStyle()} onClick={this.createButtonClicked}>Create</Button>
+                </HeaderSpan>
+
                 <SelectorDotsGroup>
                     <SelectorDot id={sectionNames.todayGoals} onClick={this.selectorDotClicked} style={this.getSelectorDotStyle(sectionNames.todayGoals)}/>
-                    <div>Today's Goals</div>
+                    <SelectorText>Today's Goals</SelectorText>
                     <SelectorDot id={sectionNames.activeDayKudos} onClick={this.selectorDotClicked} style={this.getSelectorDotStyle(sectionNames.activeDayKudos)}/>
-                    <div>Kudos</div>
+                    <SelectorText>Kudos</SelectorText>
                     <SelectorDot id={sectionNames.tomorrowGoals} onClick={this.selectorDotClicked} style={this.getSelectorDotStyle(sectionNames.tomorrowGoals)}/>
-                    <div>Tomorrow's Goals</div>
+                    <SelectorText>Tomorrow's Goals</SelectorText>
                 </SelectorDotsGroup>
 
                 <Section>
                     <SectionHeader>Today's Goals...</SectionHeader>
                     <SectionContent>
-                        <div style={{display: 'flex'}}>
-                            <StyledList>
-                                {todayGoalsList1 ? todayGoalsList1.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.todayGoals, index)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
-                            </StyledList>
-                            <StyledList>
-                                {todayGoalsList2 ? todayGoalsList2.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.todayGoals, index + 4)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
-                            </StyledList>
-                        </div>
+                        <StyledList>
+                            {todayGoalsList1 ? todayGoalsList1.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.todayGoals, index)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
+                        </StyledList>
+                        <StyledList>
+                            {todayGoalsList2 ? todayGoalsList2.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.todayGoals, index + 4)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
+                        </StyledList>
                     </SectionContent>
                 </Section>
 
                 <Section>
                 <SectionHeader>Kudos to me for...</SectionHeader>
                     <SectionContent>
-                        <div style={{display: 'flex'}}>
-                            <StyledList>
-                                {activeDayKudosList1 ? activeDayKudosList1.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.activeDayKudos, index)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
-                            </StyledList>
-                            <StyledList>
-                                {activeDayKudosList2 ? activeDayKudosList2.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.activeDayKudos, index + 4)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
-                            </StyledList>
-                        </div>
+                        <StyledList>
+                            {activeDayKudosList1 ? activeDayKudosList1.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.activeDayKudos, index)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
+                        </StyledList>
+                        <StyledList>
+                            {activeDayKudosList2 ? activeDayKudosList2.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.activeDayKudos, index + 4)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
+                        </StyledList>
                     </SectionContent>
                 </Section>
 
                 <Section>
                 <SectionHeader>Tomorrow's Goals...</SectionHeader>
                     <SectionContent>
-                        <div style={{display: 'flex'}}>
-                            <StyledList>
-                                {tomorrowGoalsList1 ? tomorrowGoalsList1.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.tomorrowGoalsList1, index)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
-                            </StyledList>
-                            <StyledList>
-                                {tomorrowGoalsList2 ? tomorrowGoalsList2.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.tomorrowGoals, index + 4)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
-                            </StyledList>
-                        </div>
+                        <StyledList>
+                            {tomorrowGoalsList1 ? tomorrowGoalsList1.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.tomorrowGoalsList1, index)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
+                        </StyledList>
+                        <StyledList>
+                            {tomorrowGoalsList2 ? tomorrowGoalsList2.map((entry, index) => <GoalEntry onClick={() =>this.removeEntry(sectionNames.tomorrowGoals, index + 4)}><StyledListItem>{entry}</StyledListItem></GoalEntry>): null}
+                        </StyledList>
                     </SectionContent>
                 </Section>
             </div>
